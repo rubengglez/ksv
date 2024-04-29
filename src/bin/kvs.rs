@@ -30,6 +30,7 @@ enum Commands {
 fn main() {
     let cli = Cli::parse();
 
+
     match &cli.command {
         Some(Commands::Get { key: _ }) => {
             eprintln!("unimplemented");
