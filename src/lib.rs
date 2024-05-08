@@ -1,6 +1,9 @@
-use std::{collections::HashMap, error::Error, path::PathBuf};
+use errors::Errors;
+use std::{collections::HashMap, path::PathBuf};
 
-pub type Result<T> = core::result::Result<T, Box<dyn Error>>;
+pub mod errors;
+
+pub type Result<T> = core::result::Result<T, Errors>;
 
 #[derive(Default)]
 pub struct KvStore {

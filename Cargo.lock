@@ -60,6 +60,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.83"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25bdb32cbbdce2b519a9cd7df3a678443100e265d5e25ca763b7572a5104f5f3"
+
+[[package]]
 name = "assert_cmd"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -194,10 +200,12 @@ checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
 name = "kvs"
 version = "0.1.1"
 dependencies = [
+ "anyhow",
  "assert_cmd",
  "clap",
  "predicates",
  "tempfile",
+ "thiserror",
  "walkdir",
 ]
 
@@ -415,6 +423,26 @@ name = "termtree"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3369f5ac52d5eb6ab48c6b4ffdc8efbcad6b89c765749064ba298f2c68a16a76"
+
+[[package]]
+name = "thiserror"
+version = "1.0.60"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "579e9083ca58dd9dcf91a9923bb9054071b9ebbd800b342194c9feb0ee89fc18"
+dependencies = [
+ "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.60"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e2470041c06ec3ac1ab38d0356a6119054dedaea53e12fbefc0de730a1c08524"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "unicode-ident"

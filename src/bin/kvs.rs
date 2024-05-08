@@ -1,6 +1,8 @@
 use std::process::exit;
 
 use clap::{Parser, Subcommand};
+use kvs::errors::Errors;
+use kvs::Result;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -27,9 +29,8 @@ enum Commands {
     },
 }
 
-fn main() {
+fn main() -> Result<()> {
     let cli = Cli::parse();
-
 
     match &cli.command {
         Some(Commands::Get { key: _ }) => {
@@ -41,7 +42,7 @@ fn main() {
         Some(Commands::Rm { key: _ }) => {
             eprintln!("unimplemented");
         }
-        None => {}
+        None => return Err(Errors::NoCommand),
     }
-    exit(-1)
+    exit(-1);
 }
