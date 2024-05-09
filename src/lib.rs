@@ -1,9 +1,17 @@
 use errors::Errors;
+use serde::{Deserialize, Serialize};
+use serde_json::{Result as OtherResult, Value};
 use std::{collections::HashMap, path::PathBuf};
 
 pub mod errors;
 
-pub type Result<T> = core::result::Result<T, Errors>;
+pub type Result<T> = anyhow::Result<T, Errors>;
+
+#[derive(Serialize, Deserialize)]
+enum Commands {
+    Set(String, String),
+    Remove(String),
+}
 
 #[derive(Default)]
 pub struct KvStore {
@@ -22,6 +30,8 @@ impl KvStore {
     }
 
     pub fn set(&mut self, key: String, value: String) -> Result<()> {
+        let command = Commands::Set(key.clone(), value.clone());
+        let serialized_command = serde_json::to_string(&command)?;
         self.store.insert(key, value);
         Ok(())
     }
@@ -31,6 +41,8 @@ impl KvStore {
     }
 
     pub fn remove(&mut self, key: String) -> Result<()> {
+        let command = Commands::Remove(key.clone());
+        let serialized_command = serde_json::to_string(&command)?;
         self.store.remove(&key);
         Ok(())
     }

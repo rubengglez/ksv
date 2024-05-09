@@ -8,4 +8,6 @@ pub enum Errors {
     ImpossibleOpenFile(#[from] io::Error),
     #[error("no command")]
     NoCommand,
+    #[error("serializing failed")]
+    SerializingCommand(#[from] serde_json::Error),
 }
