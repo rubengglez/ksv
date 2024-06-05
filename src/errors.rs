@@ -9,5 +9,7 @@ pub enum Errors {
     #[error("no command")]
     NoCommand,
     #[error("serializing failed")]
-    SerializingCommand(#[from] serde_json::Error),
+    ImpossibleRemoveKeyDoesNotExist,
+    #[error("parsing error")]
+    ParsingError(#[from] serde_json::Error),
 }

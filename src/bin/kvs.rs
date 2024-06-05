@@ -34,12 +34,31 @@ fn main() -> Result<()> {
     let mut kvs = KvStore::new();
 
     match &cli.command {
-        Some(Commands::Get { key: _ }) => {
-            eprintln!("unimplemented");
-        }
-        Some(Commands::Set { key, value }) => return kvs.set(key.to_string(), value.to_string()),
-        Some(Commands::Rm { key }) => return kvs.remove(key.to_string()),
-        None => return Err(Errors::NoCommand),
+        Some(Commands::Get { key }) => match kvs.get(key.to_string()) {
+            Ok(value) => {
+                let message = value.or(Some("Key not found".to_owned()));
+                println!("{}", message.unwrap());
+                exit(0);
+            }
+            Err(error) => {
+                println!("{}", error);
+                exit(-1);
+            }
+        },
+        Some(Commands::Set { key, value }) => match kvs.set(key.to_string(), value.to_string()) {
+            Ok(_) => exit(0),
+            Err(error) => {
+                println!("{}", error);
+                exit(-1);
+            }
+        },
+        Some(Commands::Rm { key }) => match kvs.remove(key.to_string()) {
+            Ok(_) => exit(0),
+            Err(_) => {
+                println!("Key not found");
+                exit(-1);
+            }
+        },
+        None => Err(Errors::NoCommand),
     }
-    exit(-1);
 }
